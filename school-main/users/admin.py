@@ -160,5 +160,5 @@ class StudentAdmin(ExportActionModelAdmin):
 # admin.site.register(User)
 # admin.site.register(Student)
 # admin.site.register(Teacher)
-admin.site.register(OrigenClass)
+admin.site.register(OrigenClass, ImportExportActionModelAdmin)
 admin.site.register(Grade)
