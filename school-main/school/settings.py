@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
+    'materials',
     'crispy_forms',
     'import_export',
+    'mptt',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +140,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_cdn')
+IMPORT_EXPORT_USE_TRANSACTIONS = True

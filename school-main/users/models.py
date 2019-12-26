@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from .utils import upload_location, phone_regex
+from materials.models import Subject
 
 
 # Add fields to user module and uplaod image to the media location
@@ -53,6 +54,7 @@ class Student(models.Model):
 class Teacher(models.Model):
     user = models.OneToOneField(
         User, related_name='teacher', on_delete=models.CASCADE)
+    teacher_subject = models.ForeignKey(Subject, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.user.username

@@ -13,10 +13,10 @@ phone_regex = RegexValidator(
 )
 
 # school session regex
-school_session_regex = RegexValidator(
-    r'^\d{4}\/\d{4}$',
-    message="Input a valid session year ie.yyyy/yyy"
-)
+# school_session_regex = RegexValidator(
+#     r'^\d{4}\/\d{4}$',
+#     message="Input a valid session year ie.yyyy/yyy"
+# )
 
 
 def intcomma(value):

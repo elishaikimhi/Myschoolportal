@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from import_export.admin import ImportExportActionModelAdmin, ExportActionModelAdmin
-from .resources import UserResource
+from import_export.admin import ImportExportActionModelAdmin, ExportActionModelAdmin, ImportExportMixin
+from .resources import UsersResource
 from django.utils.html import format_html
+from django.utils.translation import gettext_lazy
 
 # from .forms import CostumeSinupForm, CustomUserChangeForm
 from .models import User, Student, Teacher, OrigenClass, Grade
@@ -10,8 +11,8 @@ from .models import User, Student, Teacher, OrigenClass, Grade
 
 
 @admin.register(User)
-class UserAdmin(ImportExportActionModelAdmin, UserAdmin):
-    resource_class = UserResource
+class UsersAdmin(ImportExportActionModelAdmin, UserAdmin):
+    resource_class = UsersResource
 
     def profile_image_tag(self, obj):
         height = 50
@@ -75,24 +76,26 @@ class UserAdmin(ImportExportActionModelAdmin, UserAdmin):
             'fields': ('email', 'password1', 'password2')}
          ),
     )
-    actions = ["deactivate_selected_users", "activate_selected_users"]
+    # actions = ["deactivate_selected_users", "activate_selected_users"]
 
-    # Deactivate selected user
-    def deactivate_selected_users(self, request, queryset):
-        queryset.update(is_active=False)
+    # # Deactivate selected user
+    # def deactivate_selected_users(self, request, queryset):
+    #     queryset.update(is_active=False)
 
-    # Activate selected user
-    def activate_selected_users(self, request, queryset):
-        queryset.update(is_active=True)
+    # # Activate selected user
+    # def activate_selected_users(self, request, queryset):
+    #     queryset.update(is_active=True)
 
 
 @admin.register(Teacher)
 class TeacherAdmin(ExportActionModelAdmin):
     list_display = ['user_id',
+                    'teacher_full_name',
                     'user_profile_image',
                     'user',
                     'user_personal_number',
-                    
+                    'teacher_subject',
+                   
                     ]
     ordering = ('user',)
 
@@ -120,6 +123,8 @@ class TeacherAdmin(ExportActionModelAdmin):
         return obj.user.phone_number
     user_personal_number.short_description = 'personal number 📞'
 
+    def teacher_full_name(self, obj):
+        return f'Teacher {obj.user.last_name} {obj.user.first_name}'
 
 
 @admin.register(Student)
@@ -162,3 +167,12 @@ class StudentAdmin(ExportActionModelAdmin):
 # admin.site.register(Teacher)
 admin.site.register(OrigenClass, ImportExportActionModelAdmin)
 admin.site.register(Grade)
+
+
+# admin.AdminSite.site_title = gettext_lazy('My School')
+
+# # Text to put in each page's <h1>.
+# admin.AdminSite.site_header = gettext_lazy('My School Administration')
+
+# # Text to put at the top of the admin index page.
+# admin.AdminSite.index_title = gettext_lazy('My School Administration')
